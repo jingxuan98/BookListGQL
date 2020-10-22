@@ -1,1 +1,1 @@
-export { default as BookInfo } from "./BookInfo";
+export { default as Dashboard } from "./Dashboard";

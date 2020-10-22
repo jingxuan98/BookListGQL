@@ -6,11 +6,12 @@ import {
   DELETE_BOOK_DETAILS,
   ADD_BOOK_DETAILS
 } from "./GqlMutations";
-import { List, Modal, Button, Input } from "antd";
+import { List, Modal, Form, Input } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 
 const { Search } = Input;
 
-const BookInfo = () => {
+const Dashboard = () => {
   const [visible, setVisible] = useState(false);
   const [id, setId] = useState("");
   const [name, setName] = useState("");
@@ -35,7 +36,7 @@ const BookInfo = () => {
     }
   }, [searchTerm]);
 
-  const deleteBookDetails = ID => {
+  const handleDeleteBookDetails = ID => {
     deleteBook({
       variables: { id: ID }
     });
@@ -43,7 +44,7 @@ const BookInfo = () => {
     handleDataSet(true);
   };
 
-  const clearForm = value => {
+  const handleClearForm = value => {
     if (value == "add") document.getElementById("add-form").reset();
     else document.getElementById("update-form").reset();
   };
@@ -76,24 +77,49 @@ const BookInfo = () => {
       <Modal
         title={name}
         visible={visible}
-        onOk={e => {
-          e.preventDefault();
-          updateBook({
-            variables: {
-              id: id,
-              name: nameUpdate.value,
-              author: authorUpdate.value
-            }
-          });
-          setSearchResults(data.books);
-          setVisible(false);
-          clearForm("update");
-        }}
         onCancel={handleCancel}
+        footer={[
+          <button
+            onClick={e => {
+              e.preventDefault();
+              updateBook({
+                variables: {
+                  id: id,
+                  name: nameUpdate.value,
+                  author: authorUpdate.value
+                }
+              });
+              setSearchResults(data.books);
+              setVisible(false);
+              handleClearForm("update");
+            }}
+            className="green-button"
+          >
+            Update
+          </button>
+        ]}
       >
         <form id="update-form">
-          <input ref={value => (nameUpdate = value)} id="nameUpdate" />
-          <input ref={value => (authorUpdate = value)} id="authorUpdate" />
+          <h3 style={{ marginLeft: "15px", fontSize: "16px" }}>
+            Update Book Name:{" "}
+          </h3>
+          <input
+            placeholder="Book Name"
+            type="text"
+            ref={value => (nameUpdate = value)}
+            id="nameUpdate"
+          />
+          <h3
+            style={{ marginLeft: "15px", fontSize: "16px", marginTop: "15px" }}
+          >
+            Update Author Name:{" "}
+          </h3>
+          <input
+            placeholder="Author"
+            type="text"
+            ref={value => (authorUpdate = value)}
+            id="authorUpdate"
+          />
         </form>
       </Modal>
     );
@@ -103,35 +129,52 @@ const BookInfo = () => {
   if (error) return <p>Error :(</p>;
 
   return (
-    <div>
-      <Search
-        placeholder="input search text"
+    <div className="column" style={{ width: "100%" }}>
+      <Input
+        className="search-input"
+        placeholder="Search Book Title"
         value={searchTerm}
         onChange={handleChange}
         onFocus={() => handleDataSet(false)}
+        //prefix={<SearchOutlined />}
       />
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          addBook({
-            variables: { name: nameAdd.value, author: authorAdd.value }
-          });
-          refetch();
-          handleDataSet(true);
-          clearForm("add");
-        }}
-        id="add-form"
-      >
-        <input ref={value => (nameAdd = value)} id="nameAdd" />
-        <input ref={value => (authorAdd = value)} id="authorAdd" />
-        <button type="submit"> Add Book </button>
+      <form id="add-form" className="row">
+        <input
+          type="text"
+          placeholder="Book Name"
+          ref={value => (nameAdd = value)}
+          id="nameAdd"
+        />
+        <input
+          type="text"
+          placeholder="Author"
+          ref={value => (authorAdd = value)}
+          id="authorAdd"
+        />
+        <button
+          className="green-button"
+          style={{ width: "250px" }}
+          onClick={e => {
+            e.preventDefault();
+            addBook({
+              variables: { name: nameAdd.value, author: authorAdd.value }
+            });
+            refetch();
+            handleDataSet(true);
+            handleClearForm("add");
+          }}
+        >
+          {" "}
+          Add Book{" "}
+        </button>
       </form>
       {renderModal()}
 
       {searchResults && (
         <List
+          className="list-table"
           size="large"
-          header={<div>Header</div>}
+          header={<div className="list-header">Books Details</div>}
           bordered
           size="large"
           pagination={{
@@ -144,12 +187,20 @@ const BookInfo = () => {
           renderItem={item => (
             <List.Item
               actions={[
-                <a onClick={() => handleModal(item)} key={item.id + "edit"}>
+                <button
+                  className="green-button"
+                  onClick={() => handleModal(item)}
+                  key={item.id + "edit"}
+                >
                   Edit
-                </a>,
-                <a onClick={() => deleteBookDetails(item.id)} key={item.id}>
+                </button>,
+                <button
+                  className="red-button"
+                  onClick={() => handleDeleteBookDetails(item.id)}
+                  key={item.id}
+                >
                   Delete
-                </a>
+                </button>
               ]}
             >
               <List.Item.Meta title={item.name} description={item.author} />
@@ -161,7 +212,7 @@ const BookInfo = () => {
   );
 };
 
-export default BookInfo;
+export default Dashboard;
 
 // {data.books.map(book => (
 //   <>

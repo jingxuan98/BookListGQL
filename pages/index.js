@@ -1,6 +1,6 @@
 import { ApolloProvider } from "@apollo/react-hooks";
 import ApolloClient, { gql } from "apollo-boost";
-import { BookInfo } from "../components/BookInfo";
+import { Dashboard } from "../components/BookInfo";
 import "antd/dist/antd.css";
 
 const Home = ({ data }) => {
@@ -10,9 +10,9 @@ const Home = ({ data }) => {
 
   return (
     <ApolloProvider client={client}>
-      <div>
-        <h1>NextJS GraphQL Apollo App</h1>
-        <BookInfo />
+      <div className="container" style={{ padding: "50px 100px" }}>
+        <h1>My 'To Read' Book List</h1>
+        <Dashboard />
       </div>
     </ApolloProvider>
   );
