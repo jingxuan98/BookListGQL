@@ -44,7 +44,7 @@ const Dashboard = () => {
     }
   }, [searchTerm]);
 
-  const handleDeleteBookDetails = ID => {
+  const handleDeleteBookDetails = (ID: string) => {
     deleteBook({
       variables: { id: ID }
     });
@@ -52,7 +52,7 @@ const Dashboard = () => {
     handleDataSet(true);
   };
 
-  const handleClearForm = value => {
+  const handleClearForm = (value: string) => {
     if (value == "add") {
       let form = document.getElementById("add-form") as HTMLFormElement;
       form.reset();
@@ -62,7 +62,7 @@ const Dashboard = () => {
     }
   };
 
-  const handleDataSet = boolean => {
+  const handleDataSet = (boolean: boolean) => {
     if (!boolean) setSearchResults(data.books);
 
     setUseData(boolean);
