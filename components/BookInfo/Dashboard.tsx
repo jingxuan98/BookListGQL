@@ -23,7 +23,7 @@ const Dashboard = () => {
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState<Books[]>([]);
   const [author, setAuthor] = useState("");
   const [useData, setUseData] = useState(true);
 
