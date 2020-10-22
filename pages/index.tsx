@@ -3,7 +3,7 @@ import ApolloClient, { gql } from "apollo-boost";
 import { Dashboard } from "../components/BookInfo";
 import "antd/dist/antd.css";
 
-const Home = ({ data }) => {
+const Home = ({ data: any }) => {
   const client = new ApolloClient({
     uri: "http://localhost:3000/api/graphql-data"
   });

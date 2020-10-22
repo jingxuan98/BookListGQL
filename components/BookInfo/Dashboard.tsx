@@ -6,10 +6,17 @@ import {
   DELETE_BOOK_DETAILS,
   ADD_BOOK_DETAILS
 } from "./GqlMutations";
-import { List, Modal, Form, Input } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { List, Modal, Input } from "antd";
 
-const { Search } = Input;
+interface Books {
+  id: string;
+  name: string;
+  author: string;
+}
+
+interface BooksData {
+  books: Books[];
+}
 
 const Dashboard = () => {
   const [visible, setVisible] = useState(false);
@@ -20,15 +27,16 @@ const Dashboard = () => {
   const [author, setAuthor] = useState("");
   const [useData, setUseData] = useState(true);
 
-  const { loading, error, data, refetch } = useQuery(GET_BOOK_DETAILS);
+  const { loading, data, refetch, error } = useQuery<BooksData>(
+    GET_BOOK_DETAILS
+  );
   const [updateBook] = useMutation(SET_BOOK_DETAILS);
   const [deleteBook] = useMutation(DELETE_BOOK_DETAILS);
   const [addBook] = useMutation(ADD_BOOK_DETAILS);
-  var nameAdd, authorAdd;
+  var nameAdd: HTMLInputElement, authorAdd: HTMLInputElement;
 
   useEffect(() => {
     if (data) {
-      console.log(data.books);
       const results = data.books.filter(book =>
         book.name.toLowerCase().includes(searchTerm)
       );
@@ -45,8 +53,13 @@ const Dashboard = () => {
   };
 
   const handleClearForm = value => {
-    if (value == "add") document.getElementById("add-form").reset();
-    else document.getElementById("update-form").reset();
+    if (value == "add") {
+      let form = document.getElementById("add-form") as HTMLFormElement;
+      form.reset();
+    } else {
+      let form = document.getElementById("add-form") as HTMLFormElement;
+      form.reset();
+    }
   };
 
   const handleDataSet = boolean => {
@@ -72,7 +85,7 @@ const Dashboard = () => {
   };
 
   const renderModal = () => {
-    let nameUpdate, authorUpdate;
+    let nameUpdate: HTMLInputElement, authorUpdate: HTMLInputElement;
     return (
       <Modal
         title={name}
@@ -176,7 +189,6 @@ const Dashboard = () => {
           size="large"
           header={<div className="list-header">Books Details</div>}
           bordered
-          size="large"
           pagination={{
             onChange: page => {
               console.log(page);
@@ -213,39 +225,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-// {data.books.map(book => (
-//   <>
-//     <p>
-//       {book.name} - {book.author}
-//     </p>
-
-//     <form
-//       key={book.id}
-//       onSubmit={e => {
-//         e.preventDefault();
-//         updateBook({
-//           variables: {
-//             id: book.id,
-//             name: name.value,
-//             author: author.value
-//           }
-//         });
-//       }}
-//     >
-//       <input ref={value => (name = value)} id="name" />
-//       <input ref={value => (author = value)} id="author" />
-//       <button type="submit">Update Book</button>
-//     </form>
-//     <button onClick={() => deleteBookDetails(book.id)}>Delete</button>
-//   </>
-// ))}
-
-// console.log(data.books);
-
-// const lowercasedFilter = filter.toLowerCase();
-// const filteredData = data.books.filter(item => {
-//   return Object.keys(item).some(key =>
-//     item[key].toLowerCase().includes(lowercasedFilter)
-//   );
-// });
