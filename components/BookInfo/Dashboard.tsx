@@ -160,13 +160,13 @@ const Dashboard = () => {
         <input
           type="text"
           placeholder="Book Name"
-          ref={value => (nameAdd = value)}
+          ref={value => (nameAdd = value!)}
           id="nameAdd"
         />
         <input
           type="text"
           placeholder="Author"
-          ref={value => (authorAdd = value)}
+          ref={value => (authorAdd = value!)}
           id="authorAdd"
         />
         <button
