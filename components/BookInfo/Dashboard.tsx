@@ -63,7 +63,7 @@ const Dashboard = () => {
   };
 
   const handleDataSet = (boolean: boolean) => {
-    if (!boolean) {
+    if (!boolean && data) {
       const resultsBool = data.books;
       setSearchResults(resultsBool);
     }
