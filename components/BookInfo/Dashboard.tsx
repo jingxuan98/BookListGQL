@@ -124,7 +124,7 @@ const Dashboard = () => {
           <input
             placeholder="Book Name"
             type="text"
-            ref={value => (nameUpdate = value)}
+            ref={value => (nameUpdate = value!)}
             id="nameUpdate"
           />
           <h3
@@ -135,7 +135,7 @@ const Dashboard = () => {
           <input
             placeholder="Author"
             type="text"
-            ref={value => (authorUpdate = value)}
+            ref={value => (authorUpdate = value!)}
             id="authorUpdate"
           />
         </form>
