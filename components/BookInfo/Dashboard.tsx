@@ -105,7 +105,9 @@ const Dashboard = () => {
                   author: authorUpdate.value
                 }
               });
-              setSearchResults(data.books);
+              if (data) {
+                setSearchResults(data.books);
+              }
               setVisible(false);
               handleClearForm("update");
             }}
