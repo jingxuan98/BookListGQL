@@ -22,7 +22,7 @@ const Dashboard = () => {
   const [visible, setVisible] = useState(false);
   const [id, setId] = useState("");
   const [name, setName] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState<any>("");
   const [searchResults, setSearchResults] = useState<Books[]>([]);
   const [author, setAuthor] = useState("");
   const [useData, setUseData] = useState(true);
@@ -71,11 +71,11 @@ const Dashboard = () => {
     setUseData(boolean);
   };
 
-  const handleChange = event => {
+  const handleChange = (event: any) => {
     setSearchTerm(event.target.value);
   };
 
-  const handleModal = item => {
+  const handleModal = (item: Books) => {
     setVisible(true);
     setId(item.id);
     setName(item.name);
@@ -83,7 +83,7 @@ const Dashboard = () => {
     handleDataSet(true);
   };
 
-  const handleCancel = e => {
+  const handleCancel = (e: any) => {
     setVisible(false);
   };
 
