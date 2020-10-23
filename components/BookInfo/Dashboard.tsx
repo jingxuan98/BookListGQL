@@ -24,7 +24,6 @@ const Dashboard = () => {
   const [name, setName] = useState("");
   const [searchTerm, setSearchTerm] = useState<any>("");
   const [searchResults, setSearchResults] = useState<Books[]>([]);
-  const [author, setAuthor] = useState("");
   const [useData, setUseData] = useState(true);
 
   const { loading, data, refetch, error } = useQuery<BooksData>(
@@ -79,7 +78,6 @@ const Dashboard = () => {
     setVisible(true);
     setId(item.id);
     setName(item.name);
-    setAuthor(item.author);
     handleDataSet(true);
   };
 
