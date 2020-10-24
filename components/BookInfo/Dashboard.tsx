@@ -1,5 +1,5 @@
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import {
   GET_BOOK_DETAILS,
   SET_BOOK_DETAILS,
@@ -22,7 +22,7 @@ const Dashboard = () => {
   const [visible, setVisible] = useState(false);
   const [id, setId] = useState("");
   const [name, setName] = useState("");
-  const [searchTerm, setSearchTerm] = useState<any>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const [searchResults, setSearchResults] = useState<Books[]>([]);
   const [useData, setUseData] = useState(true);
 
@@ -56,7 +56,7 @@ const Dashboard = () => {
       let form = document.getElementById("add-form") as HTMLFormElement;
       form.reset();
     } else {
-      let form = document.getElementById("add-form") as HTMLFormElement;
+      let form = document.getElementById("update-form") as HTMLFormElement;
       form.reset();
     }
   };
@@ -70,7 +70,7 @@ const Dashboard = () => {
     setUseData(boolean);
   };
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 
